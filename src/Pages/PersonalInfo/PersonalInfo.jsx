@@ -48,23 +48,20 @@ const PersonalInfo = () => {
 
   const { setProgress, setActiveStep } = useContext(ProfileContext);
 
-const submitHandler = (values, { resetForm }) => {
+const submitHandler = (values) => {
   console.log(values);
 
   setProgress(20); // +10%
   setActiveStep(1); // Additional Information
 
-  resetForm();
-
   navigate("/additional-info");
 };
 
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
+    <div className="flex h-screen bg-[#F8FAFC] overflow-hidden">
       <StepSidebar />
 
-      <div className="flex-1 bg-white px-6 md:px-10 py-8">
-        <Box sx={{ maxWidth: "1000px" }}>
+      <div className="flex-1 bg-white px-8 py-6 overflow-auto">
           <FormHeader
             title="Personal Information"
             subtitle="Add your basic information to complete your profile and personalize your healthcare journey."
@@ -396,7 +393,7 @@ const submitHandler = (values, { resetForm }) => {
               </Form>
             )}
           </Formik>
-        </Box>
+       
       </div>
     </div>
   );

@@ -16,7 +16,10 @@ import CustomTextField from "../../components/Common/CustomTextField";
 import CustomSelect from "../../components/Common/CustomSelect";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useNavigate } from "react-router-dom";
+import { additionalInfoSchema } from "./additionalInfoSchema";
 
+import { useContext } from "react";
+import { ProfileContext } from "../../context/ProfileContext";
 const AdditionalInfo = () => {
     const navigate = useNavigate();
 
@@ -33,9 +36,15 @@ const AdditionalInfo = () => {
     alcoholConsumption: "",
     emergencyRelationship:"",
   };
+//submit
+  const { setProgress, setActiveStep } = useContext(ProfileContext);
 
   const submitHandler = (values) => {
     console.log(values);
+    setProgress(30);
+    setActiveStep(2);
+    navigate("/medicalhistory");
+
   };
 
   return (
@@ -45,11 +54,15 @@ const AdditionalInfo = () => {
       <div className="flex-1 bg-white px-8 py-6 overflow-auto">
         <FormHeader
           title="Additional Information"
-          subtitle="Provide additional health and lifestyle details."
+          subtitle="Enhance your profile with optional details for a more personalized healthcare journey."
         />
         <div>
-          <Formik initialValues={initialValues} onSubmit={submitHandler}>
-            {({ values, handleChange, handleBlur }) => (
+          <Formik
+            initialValues={initialValues}
+            onSubmit={submitHandler}
+            validationSchema={additionalInfoSchema}
+          >
+            {({ values, handleChange, handleBlur, touched, errors }) => (
               <Form>
                 <Grid container spacing={3}>
                   {/* height */}
@@ -74,6 +87,8 @@ const AdditionalInfo = () => {
                         value={values.height}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        error={touched.height && Boolean(errors.height)}
+                        helperText={touched.height && errors.height}
                         variant="standard"
                         fullWidth
                         input={{
@@ -107,7 +122,6 @@ const AdditionalInfo = () => {
                         }}
                       >
                         <MenuItem value="cm">cm</MenuItem>
-                        <MenuItem value="m">m</MenuItem>
                         <MenuItem value="ft">ft</MenuItem>
                       </Select>
                     </Box>
@@ -135,6 +149,8 @@ const AdditionalInfo = () => {
                         value={values.weight}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        error={touched.weight && Boolean(errors.weight)}
+                        helperText={touched.weight && errors.weight}
                         variant="standard"
                         fullWidth
                         input={{
@@ -168,7 +184,7 @@ const AdditionalInfo = () => {
                         }}
                       >
                         <MenuItem value="kg">kg</MenuItem>
-                        <MenuItem value="g">g</MenuItem>
+                        <MenuItem value="g">lb</MenuItem>
                       </Select>
                     </Box>
                   </Grid>
@@ -183,6 +199,10 @@ const AdditionalInfo = () => {
                       value={values.bloodPressure}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      error={
+                        touched.bloodPressure && Boolean(errors.bloodPressure)
+                      }
+                      helperText={touched.bloodPressure && errors.bloodPressure}
                       slotProps={{
                         input: {
                           endAdornment: (
@@ -205,6 +225,8 @@ const AdditionalInfo = () => {
                       value={values.bloodSugar}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      error={touched.bloodSugar && Boolean(errors.bloodSugar)}
+                      helperText={touched.bloodSugar && errors.bloodSugar}
                       slotProps={{
                         input: {
                           endAdornment: (
@@ -227,6 +249,14 @@ const AdditionalInfo = () => {
                       name="physicalActivity"
                       value={values.physicalActivity}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        touched.physicalActivity &&
+                        Boolean(errors.physicalActivity)
+                      }
+                      helperText={
+                        touched.physicalActivity && errors.physicalActivity
+                      }
                       options={[
                         "Sedentary",
                         "Lightly Active",
@@ -248,6 +278,13 @@ const AdditionalInfo = () => {
                       value={values.dietaryPreference}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      error={
+                        touched.dietaryPreference &&
+                        Boolean(errors.dietaryPreference)
+                      }
+                      helperText={
+                        touched.dietaryPreference && errors.dietaryPreference
+                      }
                       options={[
                         "No Preference",
                         "Vegetarian",
@@ -271,6 +308,10 @@ const AdditionalInfo = () => {
                       value={values.smokingStatus}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      error={
+                        touched.smokingStatus && Boolean(errors.smokingStatus)
+                      }
+                      helperText={touched.smokingStatus && errors.smokingStatus}
                       options={[
                         "Never Smoked",
                         "Former Smoker",
@@ -292,6 +333,13 @@ const AdditionalInfo = () => {
                       value={values.alcoholConsumption}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      error={
+                        touched.alcoholConsumption &&
+                        Boolean(errors.alcoholConsumption)
+                      }
+                      helperText={
+                        touched.alcoholConsumption && errors.alcoholConsumption
+                      }
                       options={[
                         "Never",
                         "Occasionally",
@@ -315,6 +363,15 @@ const AdditionalInfo = () => {
                       name="emergencyRelationship"
                       value={values.emergencyRelationship}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        touched.emergencyRelationship &&
+                        Boolean(errors.emergencyRelationship)
+                      }
+                      helperText={
+                        touched.emergencyRelationship &&
+                        errors.emergencyRelationship
+                      }
                       options={[
                         "Parent",
                         "Spouse",
@@ -342,36 +399,73 @@ const AdditionalInfo = () => {
                       placeholder="+91 98765 43210"
                       value={values.emergencyNumber}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        touched.emergencyNumber &&
+                        Boolean(errors.emergencyNumber)
+                      }
+                      helperText={
+                        touched.emergencyNumber && errors.emergencyNumber
+                      }
                     />
                   </Grid>
 
-                  {/* skip Buttons */}
-                  <Grid size={{ xs: 12, md: 6 }}>
-                    <Button variant="outlined" onClick={() => navigate("/")}>
-                      Skip for now
-                    </Button>
-                  </Grid>
-
-                  {/* goback btn */}
-                  <Box sx={{ display: "flex", gap: 2, marginLeft:15,px: 4,
-                          py: 1.5,
-                          boxShadow: "none", }}>
-                    <Button variant="text" onClick={() => navigate("/")}>
-                      Go Back
-                    </Button>
-
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      onClick={() => navigate("/")}
+                  <Grid size={12}>
+                    <Box
                       sx={{
-                        bgcolor: "#0F766E",
-                        textTransform: "none",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        mt: 4,
                       }}
                     >
-                      Add Medical History
-                    </Button>
-                  </Box>
+                      {/* Left Side */}
+                      <Button
+                        variant="outlined"
+                        onClick={() => navigate("/medicalhistory")}
+                        sx={{
+                          textTransform: "none",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        Skip for now
+                      </Button>
+
+                      {/* Right Side */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          gap: 2,
+                        }}
+                      >
+                        <Button
+                          variant="text"
+                          onClick={() => navigate("/")}
+                          sx={{
+                            textTransform: "none",
+                          }}
+                        >
+                          Go Back
+                        </Button>
+
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          sx={{
+                            bgcolor: "#0F766E",
+                            textTransform: "none",
+                            borderRadius: "10px",
+                            px: 4,
+                            "&:hover": {
+                              bgcolor: "#0D665F",
+                            },
+                          }}
+                        >
+                          Add Medical History
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Grid>
                 </Grid>
               </Form>
             )}
