@@ -4,19 +4,19 @@ export const ProfileContext = createContext();
 
 export const ProfileProvider = ({ children }) => {
   const [progress, setProgress] = useState(() => {
-    return Number(localStorage.getItem("progress")) || 10;
+    return Number(sessionStorage.getItem("progress")) || 10;
   });
 
   const [activeStep, setActiveStep] = useState(() => {
-    return Number(localStorage.getItem("activeStep")) || 0;
+    return Number(sessionStorage.getItem("activeStep")) || 0;
   });
 
   useEffect(() => {
-    localStorage.setItem("progress", progress);
+    sessionStorage.setItem("progress", progress);
   }, [progress]);
 
   useEffect(() => {
-    localStorage.setItem("activeStep", activeStep);
+    sessionStorage.setItem("activeStep", activeStep);
   }, [activeStep]);
 
   return (
