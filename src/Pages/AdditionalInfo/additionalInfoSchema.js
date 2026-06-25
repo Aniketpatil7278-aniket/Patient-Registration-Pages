@@ -3,8 +3,8 @@ import * as Yup from "yup";
 export const additionalInfoSchema = Yup.object({
   height: Yup.number()
     .typeError("Height must be a number")
-    .min(50, "Height should be at least 50 cm")
-    .max(250, "Height should not exceed 250 cm"),
+    .min(50, "Height should be between 50 cm and 250 cm.")
+    .max(250, "Height should be between 50 cm and 250 cm."),
 
   weight: Yup.number()
     .typeError("weight must be a number")
@@ -21,15 +21,23 @@ export const additionalInfoSchema = Yup.object({
     .typeError("Blood sugar must be a number")
     .min(0, "Blood sugar cannot be negative"),
 
-  physicalActivity: Yup.string().required("Please select your activity level."),
+  physicalActivity: Yup.string().notOneOf(
+    ["Sedentary"],
+    "Please select your activity level.",
+  ),
 
-  dietaryPreference: Yup.string().required(
+  dietaryPreference: Yup.string().notOneOf(
+    ["No Preference"],
     "Please select a valid dietary preference.",
   ),
 
-  smokingStatus: Yup.string().required("Please select a valid smoking status."),
+  smokingStatus: Yup.string().notOneOf(
+    ["Never Smoked"],
+    "Please select a valid smoking status.",
+  ),
 
-  alcoholConsumption: Yup.string().required(
+  alcoholConsumption: Yup.string().notOneOf(
+    ["Occasionally"],
     "Please select a valid alcohol consumption preference.",
   ),
 

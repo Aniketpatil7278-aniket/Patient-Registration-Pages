@@ -140,6 +140,9 @@ const InsuranceInfo = () => {
                           sx={{
                             textAlign: "center",
                             cursor: "pointer",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
                           }}
                         >
                           <UploadCloud size={50} color="#C4C4C4" />

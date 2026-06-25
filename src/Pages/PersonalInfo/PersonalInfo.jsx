@@ -6,6 +6,7 @@ import {
   Box,
   Grid,
   OutlinedInput,
+  Typography,
 } from "@mui/material";
 
 import {
@@ -319,10 +320,7 @@ const submitHandler = (values) => {
                       mt: 1,
                     }}
                   >
-                  
-                    <CustomLabel required>
-                      These fields are required!
-                    </CustomLabel>
+                    <Typography variant="body1"> * These fields are required!</Typography>
                   </Box>
                 </Grid>
 

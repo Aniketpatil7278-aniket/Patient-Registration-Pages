@@ -126,7 +126,7 @@ const Review=()=>{
                           sx={{
                             px: 3,
                             py: 2,
-                            bgcolor: "#F3F4F6",
+                            bgcolor: "#14B392",
                             fontWeight: 700,
                             display: "flex",
                             alignItems: "center",
