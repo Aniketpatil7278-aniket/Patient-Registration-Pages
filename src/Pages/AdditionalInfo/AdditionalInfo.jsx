@@ -1,25 +1,24 @@
 import { Formik, Form } from "formik";
 import {
   Grid,
-  InputLabel,
   Box,
   Select,
   MenuItem,
   TextField,
   InputAdornment,
   Typography,
-  Button,
 } from "@mui/material";
 import StepSidebar from "../../components/Sidebar/StepSidebar";
 import FormHeader from "../../components/Header/FormHeader";
+import CustomLabel from "../../components/Common/CustomLabel";
 import CustomTextField from "../../components/Common/CustomTextField";
 import CustomSelect from "../../components/Common/CustomSelect";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useNavigate } from "react-router-dom";
 import { additionalInfoSchema } from "./additionalInfoSchema";
+import CustomButton from "../../components/Common/CustomButton";
 
-import { useContext } from "react";
-import { ProfileContext } from "../../context/ProfileContext";
+
 const AdditionalInfo = () => {
     const navigate = useNavigate();
 
@@ -34,15 +33,13 @@ const AdditionalInfo = () => {
     dietaryPreference: "",
     smokingStatus: "",
     alcoholConsumption: "",
-    emergencyRelationship:"",
+    emergencyRelationship: "",
+    emergencyNumber:"",
   };
 //submit
-  const { setProgress, setActiveStep } = useContext(ProfileContext);
 
   const submitHandler = (values) => {
     console.log(values);
-    setProgress(30);
-    setActiveStep(2);
     navigate("/medicalhistory");
 
   };
@@ -67,7 +64,7 @@ const AdditionalInfo = () => {
                 <Grid container spacing={3}>
                   {/* height */}
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <InputLabel sx={{ mb: 1 }}>Height</InputLabel>
+                    <CustomLabel>Height</CustomLabel>
 
                     <Box
                       sx={{
@@ -129,7 +126,7 @@ const AdditionalInfo = () => {
 
                   {/* weight */}
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <InputLabel sx={{ mb: 1 }}>Weight</InputLabel>
+                    <CustomLabel>Weight</CustomLabel>
 
                     <Box
                       sx={{
@@ -191,7 +188,7 @@ const AdditionalInfo = () => {
 
                   {/* Blood Pressure */}
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <InputLabel sx={{ mb: 1 }}>Blood Pressure</InputLabel>
+                    <CustomLabel>Blood Pressure</CustomLabel>
 
                     <CustomTextField
                       name="bloodPressure"
@@ -217,7 +214,7 @@ const AdditionalInfo = () => {
 
                   {/* Blood Sugar */}
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <InputLabel sx={{ mb: 1 }}>Blood Sugar</InputLabel>
+                    <CustomLabel>Blood Sugar</CustomLabel>
 
                     <CustomTextField
                       name="bloodSugar"
@@ -241,9 +238,7 @@ const AdditionalInfo = () => {
 
                   {/* Physical Activity */}
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <InputLabel sx={{ mb: 1 }}>
-                      Physical Activity Level
-                    </InputLabel>
+                    <CustomLabel>Physical Activity Level</CustomLabel>
 
                     <CustomSelect
                       name="physicalActivity"
@@ -271,7 +266,7 @@ const AdditionalInfo = () => {
 
                   {/* Dietary */}
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <InputLabel sx={{ mb: 1 }}>Dietary Preference</InputLabel>
+                    <CustomLabel>Dietary Preference</CustomLabel>
 
                     <CustomSelect
                       name="dietaryPreference"
@@ -301,7 +296,7 @@ const AdditionalInfo = () => {
 
                   {/* Smoking */}
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <InputLabel sx={{ mb: 1 }}>Smoking Status</InputLabel>
+                    <CustomLabel>Smoking Status</CustomLabel>
 
                     <CustomSelect
                       name="smokingStatus"
@@ -326,7 +321,7 @@ const AdditionalInfo = () => {
 
                   {/* Alcohol */}
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <InputLabel sx={{ mb: 1 }}>Alcohol Consumption</InputLabel>
+                    <CustomLabel>Alcohol Consumption</CustomLabel>
 
                     <CustomSelect
                       name="alcoholConsumption"
@@ -355,9 +350,7 @@ const AdditionalInfo = () => {
 
                   {/* Emergency Relationship */}
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <InputLabel sx={{ mb: 1 }}>
-                      Emergency Contact Relationship
-                    </InputLabel>
+                    <CustomLabel>Emergency Contact Relationship</CustomLabel>
 
                     <CustomSelect
                       name="emergencyRelationship"
@@ -390,9 +383,7 @@ const AdditionalInfo = () => {
 
                   {/* Emergency Number */}
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <InputLabel sx={{ mb: 1 }}>
-                      Emergency Contact Number
-                    </InputLabel>
+                    <CustomLabel>Emergency Contact Number</CustomLabel>
 
                     <CustomTextField
                       name="emergencyNumber"
@@ -411,60 +402,13 @@ const AdditionalInfo = () => {
                   </Grid>
 
                   <Grid size={12}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        mt: 4,
-                      }}
-                    >
-                      {/* Left Side */}
-                      <Button
-                        variant="outlined"
-                        onClick={() => navigate("/medicalhistory")}
-                        sx={{
-                          textTransform: "none",
-                          borderRadius: "10px",
-                        }}
-                      >
-                        Skip for now
-                      </Button>
-
-                      {/* Right Side */}
-                      <Box
-                        sx={{
-                          display: "flex",
-                          gap: 2,
-                        }}
-                      >
-                        <Button
-                          variant="text"
-                          onClick={() => navigate("/")}
-                          sx={{
-                            textTransform: "none",
-                          }}
-                        >
-                          Go Back
-                        </Button>
-
-                        <Button
-                          type="submit"
-                          variant="contained"
-                          sx={{
-                            bgcolor: "#0F766E",
-                            textTransform: "none",
-                            borderRadius: "10px",
-                            px: 4,
-                            "&:hover": {
-                              bgcolor: "#0D665F",
-                            },
-                          }}
-                        >
-                          Add Medical History
-                        </Button>
-                      </Box>
-                    </Box>
+                    <CustomButton
+                      skipText="Skip for now"
+                      backText="Go Back"
+                      submitText="Add Medical History"
+                      onSkip={() => navigate("/medicalhistory")}
+                      onBack={() => navigate("/")}
+                    />
                   </Grid>
                 </Grid>
               </Form>

@@ -9,7 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 import { ProfileContext } from "../../context/ProfileContext";
 
 import PersonIcon from "@mui/icons-material/Person";
@@ -18,11 +20,11 @@ import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
+import CheckIcon from "@mui/icons-material/Check";
 
 import ProfileProgress from "./ProfileProgress";
 import logo from "../../assets/logo.png";
 
-import CheckIcon from "@mui/icons-material/Check";
 const steps = [
   {
     title: "Personal Information",
@@ -51,7 +53,43 @@ const steps = [
 ];
 
 const StepSidebar = () => {
-  const { activeStep, progress } = useContext(ProfileContext);
+  const location = useLocation();
+
+  const { activeStep, progress, setActiveStep, setProgress } =
+    useContext(ProfileContext);
+
+  const routeMap = {
+    "/": 0,
+    "/additional-info": 1,
+    "/medicalhistory": 2,
+    "/Insurance-info": 3,
+    "/health-record": 4,
+    "/review": 5,
+    "/accountcreated": 6,
+  };
+
+  const progressMap = {
+    "/": 10,
+    "/additional-info": 30,
+    "/medicalhistory": 40,
+    "/Insurance-info": 60,
+    "/health-record": 75,
+    "/review": 90,
+    "/accountcreated":100,
+  };
+
+ useEffect(() => {
+   const step = routeMap[location.pathname];
+   const progressValue = progressMap[location.pathname];
+
+   if (step !== undefined) {
+     setActiveStep(step);
+   }
+
+   if (progressValue !== undefined) {
+     setProgress(progressValue);
+   }
+ }, [location.pathname, setActiveStep, setProgress]);
 
   return (
     <Box
@@ -66,6 +104,7 @@ const StepSidebar = () => {
         p: 3,
       }}
     >
+      {/* Top Section */}
       <Box>
         {/* Logo */}
         <Box sx={{ mb: 6 }}>
@@ -90,7 +129,7 @@ const StepSidebar = () => {
                 mb: 2,
               }}
             >
-              {/* Vertical Line */}
+              {/* Connecting Line */}
               {index !== steps.length - 1 && (
                 <Box
                   sx={{
@@ -122,7 +161,9 @@ const StepSidebar = () => {
                       width: 30,
                       height: 30,
                       bgcolor: index <= activeStep ? "#0F766E" : "#fff",
+
                       color: index <= activeStep ? "#fff" : "#6B7280",
+
                       border:
                         index <= activeStep ? "none" : "1px solid #E5E7EB",
                     }}
